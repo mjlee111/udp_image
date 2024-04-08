@@ -67,6 +67,15 @@ void udpImage::fpsUpdate()
   fps_curve_data.append(QPointF(xValue, fps));
   xValue += 0.25;
 
+  if (fps_curve_data.size() > 100)
+  {
+    fps_curve_data.removeFirst();
+    for (int i = 0; i < fps_curve_data.size(); ++i)
+    {
+      fps_curve_data[i].setX(i * 0.25);
+    }
+  }
+
   QVector<double> xData, yData;
   for (const QPointF& point : fps_curve_data)
   {
@@ -103,6 +112,16 @@ void udpImage::byteUpdate(int current_byte)
 
   byte_curve_data.append(QPointF(xValueB, current_byte));
   xValueB += 1;
+
+  if (byte_curve_data.size() > 100)
+  {
+    byte_curve_data.removeFirst();
+    for (int i = 0; i < byte_curve_data.size(); ++i)
+    {
+      byte_curve_data[i].setX(i);
+    }
+  }
+
   QVector<double> xData, yData;
   for (const QPointF& point : byte_curve_data)
   {
