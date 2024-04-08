@@ -48,7 +48,7 @@ void udpImage::resetPlot()
   pen.setWidth(2);
   byte_curve->setPen(pen2);
   ui->byte_plot->setAxisScale(QwtPlot::xBottom, 0.0, 10.0);
-  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 1000.0);
+  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 20000.0);
 }
 
 void udpImage::fpsUpdate()
