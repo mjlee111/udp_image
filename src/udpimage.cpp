@@ -48,7 +48,7 @@ void udpImage::resetPlot()
   pen.setWidth(2);
   byte_curve->setPen(pen2);
   ui->byte_plot->setAxisScale(QwtPlot::xBottom, 0.0, 10.0);
-  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 20000.0);
+  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 15000.0);
 }
 
 void udpImage::fpsUpdate()
@@ -98,6 +98,8 @@ void udpImage::byteUpdate(int current_byte)
     byte_min_max[0] = current_byte;
   }
   ui->data_byte->setText(QString::number(current_byte));
+  ui->max_bps->setText(QString::number(byte_min_max[1]));
+  ui->min_bps->setText(QString::number(byte_min_max[0]));
 
   byte_curve_data.append(QPointF(xValueB, current_byte));
   xValueB += 1;
@@ -114,8 +116,6 @@ void udpImage::byteUpdate(int current_byte)
 
   byte_curve->setSamples(xData, yData);
   ui->byte_plot->replot();
-  ui->max_bps->setText(QString::number(byte_min_max[1]));
-  ui->min_bps->setText(QString::number(byte_min_max[0]));
   byteVector.push_back(current_byte);
 }
 
@@ -136,10 +136,10 @@ void udpImage::camUpdate()
   udp::UDP::imgReturn temp;
   cv::Mat img_temp;
   temp = udpPtr->MatImgRcv(img_temp, port, ip2, *img_socket);
+  byteUpdate(temp.data_size);
   if (temp.data_size > 0)
   {
     fps++;
-    byteUpdate(temp.data_size);
   }
   else
   {
