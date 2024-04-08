@@ -48,7 +48,7 @@ void udpImage::resetPlot()
   pen.setWidth(2);
   byte_curve->setPen(pen2);
   ui->byte_plot->setAxisScale(QwtPlot::xBottom, 0.0, 10.0);
-  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 10000.0);
+  ui->byte_plot->setAxisScale(QwtPlot::yLeft, 0.0, 1000.0);
 }
 
 void udpImage::fpsUpdate()
@@ -188,6 +188,7 @@ void udpImage::on_btn_start_clicked()
 
   else if (status)
   {
+    disconnect(img_socket, SIGNAL(readyRead()), this, SLOT(camUpdate()));
     status = false;
     ui->btn_start->setStyleSheet("background-color: green;");
     ui->btn_start->setText("START");
