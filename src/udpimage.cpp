@@ -189,6 +189,8 @@ void udpImage::on_btn_start_clicked()
   else if (status)
   {
     disconnect(img_socket, SIGNAL(readyRead()), this, SLOT(camUpdate()));
+    img_socket->abort();
+    img_socket->close();
     status = false;
     ui->btn_start->setStyleSheet("background-color: green;");
     ui->btn_start->setText("START");
